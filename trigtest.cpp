@@ -20,6 +20,18 @@ float absolute(float num) {
     return num;
 }
 
+std::string roundString (std::string s) {
+    int indexOfPeriod = 0;
+    for (int i = 0; i < s.length(); i++) {
+        if (s.substr(i,1) == ".") {
+            indexOfPeriod = i;
+            break;
+        }
+    }
+    std::string substring = s.substr(0,indexOfPeriod);
+    return s.substr(0,indexOfPeriod+4);
+}
+
 int main () {
     float windowWidth = 800.f;
     float windowHeight = 800.f;
@@ -74,10 +86,17 @@ int main () {
         sf::Vertex(sf::Vector2f((rightAngleVec.x),(rightAngleVec.y)),sf::Color::Red)
     };
 
+    float horiz;
+    float padding = 15.f;
+    float vert_padd = 15.f;
+
+    horiz = sqrt((radius*radius) - (downwardLine*downwardLine))/radius;
+
     // if in first quadrant
     if ((x_distance < 0 && (y_distance > 0))) {
         angle = atanf(y_distance/x_distance) * -180/3.14159265;
         angleText = angle;
+        vert_padd = 0;
     }
     // if in second quadrant
     if (x_distance > 0 && (y_distance > 0)) { 
@@ -85,18 +104,24 @@ int main () {
         float diff = 90 - angle;
         angle = diff + 90;
         angleText = angle;
+        horiz = horiz * -1;
+        vert_padd = 0;
     }
     // if in third quadrant
     if (x_distance > 0 && (y_distance < 0)) {
         angle = atanf(y_distance/x_distance) * -180/3.14159265;
         angle += 180;
         angleText = angle;
-
+        horiz = horiz * -1;
+        padding = 0;
+        vert_padd = 15.f;
     }
     // if in fourth quadrant
     if (x_distance < 0 && (y_distance < 0)) {
         angle = atanf(y_distance/x_distance) * -180/3.14159265;
         angleText = angle + 360;
+        padding = 0;
+        vert_padd = 15.f;
     }
 
     sf::Font font;
@@ -117,6 +142,27 @@ int main () {
     angle_rad.setPosition((10),(40));
     angle_rad.setString("angle rad: " + std::to_string(angleText * 3.14159265/180));
 
+    
+
+    // display for the vertical line length
+    sf::Text vertLine_len;
+    vertLine_len.setFont(font);
+    vertLine_len.setPosition(((myCircle.getPosition().x+radius) + horiz*radius),(myCircle.getPosition().y+radius-padding));
+    vertLine_len.setCharacterSize(15);
+    vertLine_len.setFillColor(sf::Color::Magenta);
+    vertLine_len.setString(roundString((std::to_string(absolute(downwardLine)/300))));
+
+
+    
+
+    sf::Text hoizLine_len;
+    hoizLine_len.setFont(font);
+    hoizLine_len.setPosition((myCircle.getPosition().x+radius),(myCircle.getPosition().y+radius-vert_padd));
+    hoizLine_len.setCharacterSize(15);
+    hoizLine_len.setFillColor(sf::Color::Magenta);
+    hoizLine_len.setString(roundString((std::to_string(absolute(horiz)))));
+
+
         // draw everything
         window.clear();
         window.draw(myCircle);
@@ -126,6 +172,15 @@ int main () {
         window.draw(rightAngleVerticies,2,sf::Lines);
         window.draw(angle_deg);
         window.draw(angle_rad);
+        window.draw(vertLine_len);
+        window.draw(hoizLine_len);
         window.display();
+
+        sf::Event event;
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::Closed)
+                window.close();
+        }
     }
+    
 }
