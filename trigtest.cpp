@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <math.h>
+#include <vector>
 
 // get set of coordinates based on a starting point (x,y), distance away from point, and angle
 sf::Vector2f getCoordsToDrawLine (float x, float y, float distance, float angle) {
@@ -33,16 +34,20 @@ std::string roundString (std::string s) {
 }
 
 int main () {
-    float windowWidth = 800.f;
-    float windowHeight = 800.f;
+    float windowWidth = 1920.f;
+    float windowHeight = 1080.f;
 
     // radius of the circle
-    float radius = 300.f;
-    
+    float radius = 500.f;
     sf::RenderWindow window(sf::VideoMode(windowWidth,windowHeight),"Trigonometry Test");
     
     sf::CircleShape myCircle(radius);
     
+    sf::VertexArray draw_vert (sf::Lines,2);
+    sf::VertexArray draw_horiz (sf::Lines,2);
+    
+    bool toggleDraw = true;
+
     myCircle.setPosition(windowWidth/2-radius,windowHeight/2-radius);
     
     sf::IntRect boundingBox(windowWidth/2-radius,windowHeight/2-radius,radius*2,radius*2);
@@ -61,6 +66,9 @@ int main () {
 
 
     while (window.isOpen()) {
+
+    //std::vector<sf::Vertex> triangles;
+    
 
     float angleText;
     float angle;
@@ -85,6 +93,37 @@ int main () {
         sf::Vertex(sf::Vector2f((horizontalTip.x),(horizontalTip.y)),sf::Color::Red),
         sf::Vertex(sf::Vector2f((rightAngleVec.x),(rightAngleVec.y)),sf::Color::Red)
     };
+
+    sf::Event event;
+    while (window.pollEvent(event)) {
+        if (event.type == sf::Event::Closed) {
+            window.close();
+        }
+        if (event.type == sf::Event::MouseButtonReleased) {
+            if (event.mouseButton.button == sf::Mouse::Left) {
+                draw_horiz[0] = sf::Vector2f((myCircle.getPosition().x+radius),(myCircle.getPosition().y+radius));
+                draw_horiz[1] = sf::Vector2f((horizontalTip.x),horizontalTip.y);
+                draw_vert[0] = sf::Vector2f((horizontalTip.x),(horizontalTip.y));
+                draw_vert[1] = sf::Vector2f((rightAngleVec.x),(rightAngleVec.y));
+                draw_vert[0].color = sf::Color::Blue;
+                draw_vert[1].color = sf::Color::Blue;
+                draw_horiz[0].color = sf::Color::Blue;
+                draw_horiz[1].color = sf::Color::Blue;
+            }
+            if (event.mouseButton.button == sf::Mouse::Right) {
+                bool current = toggleDraw;
+                if (current == true) {
+                    toggleDraw = false;
+                }
+                if (current == false) {
+                    toggleDraw = true;
+                }
+            }
+        }
+    }
+
+    
+
 
     float horiz;
     float padding = 15.f;
@@ -174,13 +213,12 @@ int main () {
         window.draw(angle_rad);
         window.draw(vertLine_len);
         window.draw(hoizLine_len);
+        if (toggleDraw) {
+            window.draw(draw_horiz);
+            window.draw(draw_vert);
+        }
         window.display();
 
-        sf::Event event;
-        while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
     }
     
 }
