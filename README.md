@@ -1,4 +1,4 @@
-![gif](giphy.gif)
+![gif](gif.gif)
 
 # trigtest
 
