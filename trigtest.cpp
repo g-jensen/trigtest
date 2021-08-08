@@ -165,7 +165,7 @@ int main () {
 
     sf::Font font;
     // get the font
-    if (!font.loadFromFile("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf")) {
+    if (!font.loadFromFile("DejaVuSans-Bold.ttf")) {
         std::cout << "Error loading font" << std::endl;
     }
     
