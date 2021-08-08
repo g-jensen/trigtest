@@ -2,11 +2,11 @@
 
 # trigtest
 
-Compiled for Linux
-
 SFML is a graphics library for c++
 
-If you want to run this program you can install SFML:
+
+
+Compile for Linux:
 
 ```sudo apt-get install libsfml-dev```
 
