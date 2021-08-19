@@ -1,0 +1,11 @@
+﻿  trigtest.cpp
+C:\Users\gregm\source\repos\trigtest\trigtest\trigtest\trigtest.cpp(28,37): warning C4566: character represented by universal-character-name '\u03C0' cannot be represented in the current code page (1252)
+C:\Users\gregm\source\repos\trigtest\trigtest\trigtest\trigtest.cpp(70,25): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\gregm\source\repos\trigtest\trigtest\trigtest\trigtest.cpp(81,32): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+C:\Users\gregm\source\repos\trigtest\trigtest\trigtest\trigtest.cpp(82,32): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  Generating code
+  1 of 207 functions ( 0.5%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  trigtest.vcxproj -> C:\Users\gregm\source\repos\trigtest\trigtest\Release\trigtest.exe
