@@ -25,7 +25,7 @@ int main()
     Text degreeLabel(Vector2(0,0),"Angle Deg: 0.00");
     degreeLabel.setPosition(Vector2(trigCircle.getPosition().x + trigCircle.getRadius() - (degreeLabel.getGlobalBounds().width / 2.0f), trigCircle.getPosition().y - 100.f).toSf());
 
-    Text radianLabel(Vector2(0, 0), "Angle Rad π: 0.00");
+    Text radianLabel(Vector2(0, 0), "Angle Rad: 0.00");
     radianLabel.setPosition(Vector2(trigCircle.getPosition().x + trigCircle.getRadius() - (degreeLabel.getGlobalBounds().width / 2.0f), trigCircle.getPosition().y - 50.f).toSf());
     //sf::Font greek;
     //greek.loadFromFile("fonts/symbol.ttf");
@@ -78,8 +78,8 @@ int main()
         radianLabel.setString("Angle Rad: " + std::to_string(angle * (float)M_PI/180.f));
 
         trigCircle.angleLine[1].position = Vector2(
-            (cosf((angle * -1) * (3.14159265 / 180)) * trigCircle.getRadius()) + trigCircle.angleLine[0].position.x,
-            (sinf((angle * -1) * (3.14159265 / 180)) * trigCircle.getRadius()) + trigCircle.angleLine[0].position.y
+            (cosf((angle * -1) * (M_PI / 180.0f)) * trigCircle.getRadius()) + trigCircle.angleLine[0].position.x,
+            (sinf((angle * -1) * (M_PI / 180.0f)) * trigCircle.getRadius()) + trigCircle.angleLine[0].position.y
         ).toSf();
 
 
